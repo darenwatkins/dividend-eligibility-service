@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="errorFragment">
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <h4 class="alert-heading">
+            <i class="bi bi-exclamation-triangle"></i> Error
+        </h4>
+        <p class="mb-0" th:text="${errorMessage}">An error occurred while processing your request.</p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+</div>
+
+</html>
