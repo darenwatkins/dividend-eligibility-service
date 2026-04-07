@@ -78,7 +78,6 @@
                                 <tr>
                                     <th>Lender Client</th>
                                     <th>Borrower Name</th>
-                                    <th>Borrowed From</th>
                                     <th>Security Name</th>
                                     <th>ISIN</th>
                                     <th>Loaned Qty</th>
@@ -92,7 +91,6 @@
                                 <tr th:each="loan : ${stockLoanPositions}">
                                     <td th:text="${clientNameMap[loan.lenderClientId]}">Lender Client</td>
                                     <td th:text="${loan.borrowerName}">Borrower Name</td>
-                                    <td th:text="${clientNameMap[loan.lenderClientId]}">Original Owner</td>
                                     <td th:text="${securityNameMap[loan.isin]}">Security Name</td>
                                     <td th:text="${loan.isin}">DE0005140008</td>
                                     <td th:text="${#numbers.formatDecimal(loan.loanedQuantity, 0, 0)}">20,000</td>
