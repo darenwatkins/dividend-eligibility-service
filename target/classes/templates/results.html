@@ -32,9 +32,8 @@
     <div class="accordion" th:if="${!#lists.isEmpty(results)}">
         <div th:each="result, iterStat : ${results}" class="accordion-item">
             <h2 class="accordion-header" th:id="'heading-' + ${iterStat.index}">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
-                        th:attr="data-bs-target='#collapse-' + ${iterStat.index}"
-                        th:classappend="${iterStat.index > 0} ? 'collapsed' : ''">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                        th:attr="data-bs-target='#collapse-' + ${iterStat.index}">
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <span th:text="${result.clientName}">Client Name</span>
                         <div class="d-flex align-items-center">
@@ -58,8 +57,7 @@
                     </div>
                 </button>
             </h2>
-            <div th:id="'collapse-' + ${iterStat.index}" class="accordion-collapse collapse" 
-                 th:classappend="${iterStat.index == 0} ? 'show' : ''">
+            <div th:id="'collapse-' + ${iterStat.index}" class="accordion-collapse collapse">
                 <div class="accordion-body">
                     <!-- Download CSV Link -->
                     <div class="d-flex justify-content-end mb-3">
@@ -125,10 +123,11 @@
 
                                     <!-- Manufactured Dividend Row (only if onLoanQuantity > 0) -->
                                     <tr th:if="${result.onLoanQuantity > 0}">
-                                        <td colspan="6" class="fw-bold text-info mt-3">Manufactured Dividend</td>
+                                        <td colspan="7" class="fw-bold text-info mt-3">Manufactured Dividend</td>
                                     </tr>
                                     <tr th:if="${result.onLoanQuantity > 0}" class="border-bottom">
                                         <td>Gross</td>
+                                        <td>Payer</td>
                                         <td>Statutory WHT Rate</td>
                                         <td>WHT Amount</td>
                                         <td>Net (pre gross-up)</td>
@@ -137,6 +136,7 @@
                                     </tr>
                                     <tr th:if="${result.onLoanQuantity > 0}" class="border-bottom">
                                         <td th:text="${#numbers.formatCurrency(result.grossManufacturedDividend)}">€9,000.00</td>
+                                        <td th:text="${result.manufacturedDividendBorrower}">Borrower Name</td>
                                         <td th:text="${manufacturedWithholdingTaxRatePercent}">25.00%</td>
                                         <td th:text="${#numbers.formatCurrency(result.manufacturedWithholdingTaxAmount)}">€2,250.00</td>
                                         <td th:text="${#numbers.formatCurrency(result.netManufacturedDividend)}">€6,750.00</td>
@@ -148,26 +148,26 @@
                                             <i th:if="${result.grossUpAmount != null && result.grossUpAmount.compareTo(0) == 0}" 
                                                class="bi bi-exclamation-triangle" data-bs-toggle="tooltip" 
                                                th:title="'No gross-up clause — tax leakage borne by lender'"></i>
-                                        </td>                                               th:title="'No gross-up clause — tax leakage borne by lender'"></i>
-                                        </td>                                        <td th:text="${#numbers.formatCurrency(result.netManufacturedDividendAfterGrossUp)}">€6,750.00</td>
+                                        </td>
+                                        <td th:text="${#numbers.formatCurrency(result.netManufacturedDividendAfterGrossUp)}">€6,750.00</td>
                                     </tr>
 
                                     <!-- Dividend Claim Row (only if claimQuantity > 0) -->
                                     <tr th:if="${result.claimQuantity > 0}">
-                                        <td colspan="6" class="fw-bold text-warning mt-3">Dividend Claim</td>
+                                        <td colspan="7" class="fw-bold text-warning mt-3">Dividend Claim</td>
                                     </tr>
                                     <tr th:if="${result.claimQuantity > 0}" class="border-bottom">
                                         <td colspan="3">Claim Quantity</td>
-                                        <td colspan="3">Gross Claim Amount</td>
+                                        <td colspan="4">Gross Claim Amount</td>
                                     </tr>
                                     <tr th:if="${result.claimQuantity > 0}" class="border-bottom">
                                         <td colspan="3" th:text="${#numbers.formatDecimal(result.claimQuantity, 0, 0)}">5,000</td>
-                                        <td colspan="3" th:text="${#numbers.formatCurrency(result.dividendClaimAmount)}">€2,250.00</td>
+                                        <td colspan="4" th:text="${#numbers.formatCurrency(result.dividendClaimAmount)}">€2,250.00</td>
                                     </tr>
 
                                     <!-- TOTAL NET ENTITLEMENT -->
                                     <tr>
-                                        <td colspan="6" class="fw-bold text-success fs-6 border-top">
+                                        <td colspan="7" class="fw-bold text-success fs-6 border-top">
                                             TOTAL NET ENTITLEMENT: 
                                             <span th:text="${#numbers.formatCurrency(result.totalNetEntitlement)}">€42,750.00</span>
                                         </td>

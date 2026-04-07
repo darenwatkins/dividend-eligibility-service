@@ -26,9 +26,21 @@ public class PositionController {
         java.util.Map<String, String> clientNameMap = mockDataService.getClients().stream()
                 .collect(java.util.stream.Collectors.toMap(Client::getClientId, Client::getClientName));
         
+        // Add security name mapping to model
+        java.util.Map<String, String> securityNameMap = java.util.Map.of(
+            "DE0005140008", "Deutsche Bank AG",
+            "DE0007664039", "Volkswagen AG",
+            "DE0007236101", "Siemens AG",
+            "DE0008404005", "Allianz SE",
+            "DE000BAY0017", "Bayer AG",
+            "DE0007164600", "SAP SE",
+            "DE0005190003", "BMW AG"
+        );
+        
         model.addAttribute("securityPositions", securityPositions);
         model.addAttribute("stockLoanPositions", stockLoanPositions);
         model.addAttribute("clientNameMap", clientNameMap);
+        model.addAttribute("securityNameMap", securityNameMap);
         
         return "positions_positionTabs :: positionTabs";
     }

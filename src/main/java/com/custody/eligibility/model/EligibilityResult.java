@@ -40,6 +40,9 @@ public class EligibilityResult {
     private BigDecimal netManufacturedDividend;
     private BigDecimal grossUpAmount;
     private BigDecimal netManufacturedDividendAfterGrossUp;
+    
+    // Borrower information for manufactured dividends
+    private String manufacturedDividendBorrower;
 
     // Claims
     private BigDecimal dividendClaimAmount;

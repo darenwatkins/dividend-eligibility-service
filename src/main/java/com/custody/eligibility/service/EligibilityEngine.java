@@ -143,10 +143,13 @@ public class EligibilityEngine {
             BigDecimal netManufacturedDividend = BigDecimal.ZERO;
             BigDecimal grossUpAmount = BigDecimal.ZERO;
             BigDecimal netManufacturedDividendAfterGrossUp = BigDecimal.ZERO;
+            String manufacturedDividendBorrower = null;
             
             if (position.getOnLoanQuantity() > 0 && loanOpt.isPresent() && taxRuleOpt.isPresent()) {
                 StockLoanPosition loan = loanOpt.get();
                 WithholdingTaxRule taxRule = taxRuleOpt.get();
+                
+                manufacturedDividendBorrower = loan.getBorrowerName();
                 
                 grossManufacturedDividend = BigDecimal.valueOf(position.getOnLoanQuantity())
                         .multiply(declaration.getDeclaredDividendPerShare());
@@ -195,7 +198,8 @@ public class EligibilityEngine {
                     .manufacturedWithholdingTaxAmount(manufacturedWithholdingTaxAmount)
                     .netManufacturedDividend(netManufacturedDividend)
                     .grossUpAmount(grossUpAmount)
-                    .netManufacturedDividendAfterGrossUp(netManufacturedDividendAfterGrossUp);
+                    .netManufacturedDividendAfterGrossUp(netManufacturedDividendAfterGrossUp)
+                    .manufacturedDividendBorrower(manufacturedDividendBorrower);
             
             // RULE 5 - DIVIDEND CLAIM AMOUNT
             BigDecimal dividendClaimAmount = BigDecimal.ZERO;

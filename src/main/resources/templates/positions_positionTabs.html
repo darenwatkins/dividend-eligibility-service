@@ -35,6 +35,7 @@
                             <thead>
                                 <tr>
                                     <th>Client</th>
+                                    <th>Security Name</th>
                                     <th>ISIN</th>
                                     <th>Settled Qty</th>
                                     <th>Pending Settlement</th>
@@ -45,6 +46,7 @@
                             <tbody>
                                 <tr th:each="position : ${securityPositions}">
                                     <td th:text="${clientNameMap[position.clientId]}">Client Name</td>
+                                    <td th:text="${securityNameMap[position.isin]}">Security Name</td>
                                     <td th:text="${position.isin}">DE0005140008</td>
                                     <td th:text="${#numbers.formatDecimal(position.settledQuantity, 0, 0)}">100,000</td>
                                     <td th:text="${#numbers.formatDecimal(position.pendingSettlementQuantity, 0, 0)}">5,000</td>
@@ -76,6 +78,7 @@
                                 <tr>
                                     <th>Lender Client</th>
                                     <th>Borrower Name</th>
+                                    <th>Security Name</th>
                                     <th>ISIN</th>
                                     <th>Loaned Qty</th>
                                     <th>Loan Open Date</th>
@@ -86,8 +89,9 @@
                             </thead>
                             <tbody>
                                 <tr th:each="loan : ${stockLoanPositions}">
-                                    <td th:text="${loan.lenderClientId}">Lender Client</td>
+                                    <td th:text="${clientNameMap[loan.lenderClientId]}">Lender Client</td>
                                     <td th:text="${loan.borrowerName}">Borrower Name</td>
+                                    <td th:text="${securityNameMap[loan.isin]}">Security Name</td>
                                     <td th:text="${loan.isin}">DE0005140008</td>
                                     <td th:text="${#numbers.formatDecimal(loan.loanedQuantity, 0, 0)}">20,000</td>
                                     <td th:text="${#temporals.format(loan.loanOpenDate, 'yyyy-MM-dd')}">2025-06-01</td>
