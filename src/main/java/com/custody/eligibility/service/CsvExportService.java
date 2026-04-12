@@ -1,6 +1,7 @@
 package com.custody.eligibility.service;
 
 import com.custody.eligibility.model.EligibilityResult;
+import com.custody.eligibility.util.CurrencyFormatter;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -25,6 +26,7 @@ public class CsvExportService {
         csv.append("Declaration ID:,").append(result.getDeclarationId()).append("\n");
         csv.append("ISIN:,").append(result.getIsin()).append("\n");
         csv.append("Issuer:,").append(result.getIssuerName()).append("\n");
+        csv.append("Currency:,").append(result.getCurrency() != null ? result.getCurrency() : "N/A").append("\n");
         csv.append("Eligibility Status:,").append(result.getEligibilityStatus()).append("\n\n");
         
         // Position Summary
@@ -37,32 +39,32 @@ public class CsvExportService {
         
         // Real Dividend Entitlement
         csv.append("Real Dividend Entitlement\n");
-        csv.append("Gross Real Dividend,").append(CURRENCY_FORMAT.format(result.getGrossRealDividend())).append("\n");
+        csv.append("Gross Real Dividend,").append(formatCurrencyWithCode(result.getGrossRealDividend(), result.getCurrency())).append("\n");
         csv.append("Withholding Tax Rate Applied,").append(formatPercentage(result.getWithholdingTaxRateApplied())).append("\n");
-        csv.append("Withholding Tax Amount,").append(CURRENCY_FORMAT.format(result.getWithholdingTaxAmount())).append("\n");
-        csv.append("Net Real Dividend,").append(CURRENCY_FORMAT.format(result.getNetRealDividend())).append("\n\n");
+        csv.append("Withholding Tax Amount,").append(formatCurrencyWithCode(result.getWithholdingTaxAmount(), result.getCurrency())).append("\n");
+        csv.append("Net Real Dividend,").append(formatCurrencyWithCode(result.getNetRealDividend(), result.getCurrency())).append("\n\n");
         
         // Manufactured Dividend Entitlement (if applicable)
         if (result.getOnLoanQuantity() > 0) {
             csv.append("Manufactured Dividend Entitlement\n");
-            csv.append("Gross Manufactured Dividend,").append(CURRENCY_FORMAT.format(result.getGrossManufacturedDividend())).append("\n");
+            csv.append("Gross Manufactured Dividend,").append(formatCurrencyWithCode(result.getGrossManufacturedDividend(), result.getCurrency())).append("\n");
             csv.append("Statutory WHT Rate,").append(formatPercentage(result.getManufacturedWithholdingTaxRate())).append("\n");
-            csv.append("Manufactured WHT Amount,").append(CURRENCY_FORMAT.format(result.getManufacturedWithholdingTaxAmount())).append("\n");
-            csv.append("Net Manufactured Dividend (pre gross-up),").append(CURRENCY_FORMAT.format(result.getNetManufacturedDividend())).append("\n");
-            csv.append("Gross-Up Amount,").append(CURRENCY_FORMAT.format(result.getGrossUpAmount())).append("\n");
-            csv.append("Net Manufactured Dividend (post gross-up),").append(CURRENCY_FORMAT.format(result.getNetManufacturedDividendAfterGrossUp())).append("\n\n");
+            csv.append("Manufactured WHT Amount,").append(formatCurrencyWithCode(result.getManufacturedWithholdingTaxAmount(), result.getCurrency())).append("\n");
+            csv.append("Net Manufactured Dividend (pre gross-up),").append(formatCurrencyWithCode(result.getNetManufacturedDividend(), result.getCurrency())).append("\n");
+            csv.append("Gross-Up Amount,").append(formatCurrencyWithCode(result.getGrossUpAmount(), result.getCurrency())).append("\n");
+            csv.append("Net Manufactured Dividend (post gross-up),").append(formatCurrencyWithCode(result.getNetManufacturedDividendAfterGrossUp(), result.getCurrency())).append("\n\n");
         }
         
         // Dividend Claim (if applicable)
         if (result.getClaimQuantity() > 0) {
             csv.append("Dividend Claim\n");
             csv.append("Claim Quantity,").append(QUANTITY_FORMAT.format(result.getClaimQuantity())).append("\n");
-            csv.append("Gross Claim Amount,").append(CURRENCY_FORMAT.format(result.getDividendClaimAmount())).append("\n\n");
+            csv.append("Gross Claim Amount,").append(formatCurrencyWithCode(result.getDividendClaimAmount(), result.getCurrency())).append("\n\n");
         }
         
         // Total Net Entitlement
         csv.append("Total Net Entitlement\n");
-        csv.append("Total Net Entitlement,").append(CURRENCY_FORMAT.format(result.getTotalNetEntitlement())).append("\n\n");
+        csv.append("Total Net Entitlement,").append(formatCurrencyWithCode(result.getTotalNetEntitlement(), result.getCurrency())).append("\n\n");
         
         // Processing Notes
         csv.append("Processing Notes\n");
@@ -76,6 +78,12 @@ public class CsvExportService {
     private String formatPercentage(BigDecimal rate) {
         if (rate == null) return "0.00%";
         return PERCENTAGE_FORMAT.format(rate) + "%";
+    }
+    
+    private String formatCurrencyWithCode(BigDecimal amount, String currencyCode) {
+        if (amount == null) return "0.00";
+        if (currencyCode == null) return CURRENCY_FORMAT.format(amount);
+        return CurrencyFormatter.formatCurrency(amount, currencyCode);
     }
     
     private String escapeCsv(String value) {

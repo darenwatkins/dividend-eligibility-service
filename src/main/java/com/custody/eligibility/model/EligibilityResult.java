@@ -19,6 +19,7 @@ public class EligibilityResult {
     private String declarationId;
     private String isin;
     private String issuerName;
+    private String currency;
 
     // Position breakdown
     private long settledQuantity;

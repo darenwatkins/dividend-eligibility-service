@@ -32,8 +32,8 @@
             <button class="btn btn-outline-light btn-sm"
                     hx-get="/rules-reference"
                     hx-target="#rules-modal-container"
-                    data-bs-toggle="modal"
-                    data-bs-target="#rulesModal">
+                    hx-swap="innerHTML"
+                    hx-on::after-request="new bootstrap.Modal(document.getElementById('rulesModal')).show()">
                 <i class="bi bi-info-circle"></i> Show Processing Rules
             </button>
         </div>

@@ -7,7 +7,7 @@
         <h5 class="alert-heading" th:text="${declaration.issuerName} + ' - ' + ${declaration.isin}">Declaration Summary</h5>
         <p class="mb-0">
             <strong>Dividend:</strong> 
-            <span th:text="${#numbers.formatCurrency(declaration.declaredDividendPerShare)}">€0.45</span> per share |
+            <span th:text="${utils.formatCurrency(declaration.declaredDividendPerShare, declaration.currency)}">€0.45</span> per share |
             <strong>Type:</strong> <span th:text="${declaration.dividendType}">ORDINARY</span> |
             <strong>Record Date:</strong> <span th:text="${#temporals.format(declaration.recordDate, 'yyyy-MM-dd')}">2025-07-15</span> |
             <strong>Pay Date:</strong> <span th:text="${#temporals.format(declaration.payDate, 'yyyy-MM-dd')}">2025-07-22</span>
@@ -51,7 +51,7 @@
                             
                             <!-- Total Net Entitlement -->
                             <strong class="text-success ms-2">
-                                <span th:text="${#numbers.formatCurrency(result.totalNetEntitlement)}">€0.00</span>
+                                <span th:text="${utils.formatCurrency(result.totalNetEntitlement, result.currency)}">€0.00</span>
                             </strong>
                         </div>
                     </div>
@@ -115,10 +115,10 @@
                                         <td>Net Real Dividend</td>
                                     </tr>
                                     <tr class="border-bottom">
-                                        <td th:text="${#numbers.formatCurrency(result.grossRealDividend)}">€36,000.00</td>
+                                        <td th:text="${utils.formatCurrency(result.grossRealDividend, result.currency)}">€36,000.00</td>
                                         <td th:text="${#numbers.formatPercent(result.withholdingTaxRateApplied.divide(100), 1, 2)}">0.00%</td>
-                                        <td th:text="${#numbers.formatCurrency(result.withholdingTaxAmount)}">€0.00</td>
-                                        <td th:text="${#numbers.formatCurrency(result.netRealDividend)}">€36,000.00</td>
+                                        <td th:text="${utils.formatCurrency(result.withholdingTaxAmount, result.currency)}">€0.00</td>
+                                        <td th:text="${utils.formatCurrency(result.netRealDividend, result.currency)}">€36,000.00</td>
                                     </tr>
 
                                     <!-- Manufactured Dividend Row (only if onLoanQuantity > 0) -->
@@ -135,21 +135,21 @@
                                         <td>Net (post gross-up)</td>
                                     </tr>
                                     <tr th:if="${result.onLoanQuantity > 0}" class="border-bottom">
-                                        <td th:text="${#numbers.formatCurrency(result.grossManufacturedDividend)}">€9,000.00</td>
+                                        <td th:text="${utils.formatCurrency(result.grossManufacturedDividend, result.currency)}">€9,000.00</td>
                                         <td th:text="${result.manufacturedDividendBorrower}">Borrower Name</td>
                                         <td th:text="${manufacturedWithholdingTaxRatePercent}">25.00%</td>
-                                        <td th:text="${#numbers.formatCurrency(result.manufacturedWithholdingTaxAmount)}">€2,250.00</td>
-                                        <td th:text="${#numbers.formatCurrency(result.netManufacturedDividend)}">€6,750.00</td>
+                                        <td th:text="${utils.formatCurrency(result.manufacturedWithholdingTaxAmount, result.currency)}">€2,250.00</td>
+                                        <td th:text="${utils.formatCurrency(result.netManufacturedDividend, result.currency)}">€6,750.00</td>
                                         <td>
                                             <span th:if="${result.grossUpAmount != null}" 
                                                th:class="${result.grossUpAmount.compareTo(0) == 0 ? 'text-warning' : ''}" 
                                                th:title="${result.grossUpAmount.compareTo(0) == 0 ? 'No gross-up clause — tax leakage borne by lender' : ''}" 
-                                               th:text="${#numbers.formatCurrency(result.grossUpAmount)}">€0.00</span>
+                                               th:text="${utils.formatCurrency(result.grossUpAmount, result.currency)}">€0.00</span>
                                             <i th:if="${result.grossUpAmount != null && result.grossUpAmount.compareTo(0) == 0}" 
                                                class="bi bi-exclamation-triangle" data-bs-toggle="tooltip" 
                                                th:title="'No gross-up clause — tax leakage borne by lender'"></i>
                                         </td>
-                                        <td th:text="${#numbers.formatCurrency(result.netManufacturedDividendAfterGrossUp)}">€6,750.00</td>
+                                        <td th:text="${utils.formatCurrency(result.netManufacturedDividendAfterGrossUp, result.currency)}">€6,750.00</td>
                                     </tr>
 
                                     <!-- Dividend Claim Row (only if claimQuantity > 0) -->
@@ -162,14 +162,14 @@
                                     </tr>
                                     <tr th:if="${result.claimQuantity > 0}" class="border-bottom">
                                         <td colspan="3" th:text="${#numbers.formatDecimal(result.claimQuantity, 0, 0)}">5,000</td>
-                                        <td colspan="4" th:text="${#numbers.formatCurrency(result.dividendClaimAmount)}">€2,250.00</td>
+                                        <td colspan="4" th:text="${utils.formatCurrency(result.dividendClaimAmount, result.currency)}">€2,250.00</td>
                                     </tr>
 
                                     <!-- TOTAL NET ENTITLEMENT -->
                                     <tr>
                                         <td colspan="7" class="fw-bold text-success fs-6 border-top">
                                             TOTAL NET ENTITLEMENT: 
-                                            <span th:text="${#numbers.formatCurrency(result.totalNetEntitlement)}">€42,750.00</span>
+                                            <span th:text="${utils.formatCurrency(result.totalNetEntitlement, result.currency)}">€42,750.00</span>
                                         </td>
                                     </tr>
                                 </tbody>

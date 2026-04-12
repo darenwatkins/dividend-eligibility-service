@@ -68,6 +68,7 @@ public class EligibilityEngine {
                     .declarationId(declaration.getDeclarationId())
                     .isin(declaration.getIsin())
                     .issuerName(declaration.getIssuerName())
+                    .currency(declaration.getCurrency())
                     .settledQuantity(position.getSettledQuantity())
                     .onLoanQuantity(position.getOnLoanQuantity())
                     .pendingSettlementQuantity(position.getPendingSettlementQuantity())

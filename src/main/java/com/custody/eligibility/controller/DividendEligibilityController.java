@@ -5,6 +5,7 @@ import com.custody.eligibility.model.EligibilityResult;
 import com.custody.eligibility.service.CsvExportService;
 import com.custody.eligibility.service.EligibilityEngine;
 import com.custody.eligibility.service.MockDataService;
+import com.custody.eligibility.util.TemplateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -31,6 +32,9 @@ public class DividendEligibilityController {
     @Autowired
     private CsvExportService csvExportService;
 
+    @Autowired
+    private TemplateUtils templateUtils;
+
     @GetMapping("/")
     public String index() {
         return "index";
@@ -53,6 +57,7 @@ public class DividendEligibilityController {
         
         model.addAttribute("results", results);
         model.addAttribute("declaration", declaration);
+        model.addAttribute("utils", templateUtils);
         return "results :: resultsTable";
     }
 
@@ -107,6 +112,7 @@ public class DividendEligibilityController {
         model.addAttribute("totalTaxLeakage", totalTaxLeakage);
         model.addAttribute("totalGrossUpObligations", totalGrossUpObligations);
         model.addAttribute("dividendClaimsCount", dividendClaimsCount);
+        model.addAttribute("utils", templateUtils);
 
         // Add calculated percentages to model for template
         model.addAttribute("manufacturedWithholdingTaxRatePercent", "25.00%");
