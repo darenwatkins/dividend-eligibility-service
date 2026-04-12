@@ -49,10 +49,11 @@
             
             <div class="mt-3">
                 <button class="btn btn-primary btn-sm w-100"
-                        th:attr="hx-post='/process/' + ${declaration.declarationId},
-                              hx-target='#results-panel',
-                              hx-swap='innerHTML',
-                              hx-indicator='#spinner'">
+                        th:attr="hx-post='/process/' + ${declaration.declarationId}"
+                        hx-target="#results-panel"
+                        hx-swap="innerHTML"
+                        hx-indicator="#spinner"
+                        hx-on="htmx:afterRequest: if(window.innerWidth <= 768) { document.getElementById('results-panel').scrollIntoView({behavior: 'smooth', block: 'start'}); }">
                     <i class="bi bi-play-circle"></i> Process Eligibility
                 </button>
             </div>
