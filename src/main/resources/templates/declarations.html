@@ -23,13 +23,13 @@
                         <strong>Type:</strong> <span th:text="${declaration.dividendType}">ORDINARY</span>
                     </p>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-6 col-12">
                             <small class="text-muted">
                                 <strong>Ex-Date:</strong> 
                                 <span th:text="${#temporals.format(declaration.exDate, 'yyyy-MM-dd')}">2025-07-14</span>
                             </small>
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-6 col-12">
                             <small class="text-muted">
                                 <strong>Record:</strong> 
                                 <span th:text="${#temporals.format(declaration.recordDate, 'yyyy-MM-dd')}">2025-07-15</span>
@@ -48,7 +48,7 @@
             </div>
             
             <div class="mt-3">
-                <button class="btn btn-primary btn-sm"
+                <button class="btn btn-primary btn-sm w-100"
                         th:attr="hx-post='/process/' + ${declaration.declarationId},
                               hx-target='#results-panel',
                               hx-swap='innerHTML',

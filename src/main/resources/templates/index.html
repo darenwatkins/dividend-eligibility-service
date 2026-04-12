@@ -22,6 +22,180 @@
         .htmx-request.htmx-indicator {
             display: inline;
         }
+        
+        /* Mobile responsive improvements */
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1rem !important;
+                white-space: normal;
+                text-align: center;
+                line-height: 1.2;
+            }
+            
+            .navbar {
+                padding: 0.5rem 1rem;
+            }
+            
+            .nav-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            
+            .nav-tabs::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .nav-link {
+                font-size: 0.875rem;
+                padding: 0.5rem 0.75rem;
+                white-space: nowrap;
+            }
+            
+            .nav-link i {
+                font-size: 0.875rem;
+            }
+            
+            .container-fluid {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+            
+            .card-body {
+                padding: 1rem;
+            }
+            
+            .card-header h5 {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                min-height: 44px;
+                min-width: 44px;
+                font-size: 0.875rem;
+            }
+            
+            .btn-sm {
+                min-height: 38px;
+                font-size: 0.8rem;
+            }
+            
+            .accordion-button {
+                font-size: 0.875rem;
+                padding: 0.75rem 1rem;
+            }
+            
+            .table {
+                font-size: 0.875rem;
+            }
+            
+            .table td, .table th {
+                padding: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 0.875rem !important;
+            }
+            
+            .nav-link {
+                font-size: 0.75rem;
+                padding: 0.375rem 0.5rem;
+            }
+            
+            .nav-link i {
+                display: none;
+            }
+            
+            .container-fluid {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+                margin-top: 0.5rem;
+            }
+            
+            .card-body {
+                padding: 0.75rem;
+            }
+            
+            .card-header h5 {
+                font-size: 0.875rem;
+            }
+            
+            .btn {
+                min-height: 40px;
+                font-size: 0.8rem;
+            }
+            
+            .btn-sm {
+                min-height: 36px;
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* Touch-friendly improvements */
+        .btn, .nav-link, .accordion-button {
+            touch-action: manipulation;
+        }
+        
+        /* Better mobile layout */
+        .mobile-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-stack {
+                gap: 0.75rem;
+            }
+        }
+        
+        /* Responsive gap utilities */
+        .gap-2 {
+            gap: 0.5rem;
+        }
+        
+        .gap-3 {
+            gap: 1rem;
+        }
+        
+        .gap-md-3 {
+            gap: 1rem;
+        }
+        
+        @media (min-width: 768px) {
+            .flex-md-row {
+                flex-direction: row !important;
+            }
+            
+            .align-items-md-center {
+                align-items: center !important;
+            }
+            
+            .gap-md-3 {
+                gap: 1rem;
+            }
+        }
+        
+        /* Mobile table improvements */
+        @media (max-width: 768px) {
+            .table-responsive {
+                font-size: 0.75rem;
+            }
+            
+            .table th {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.375rem;
+            }
+            
+            .table td {
+                padding: 0.375rem 0.25rem;
+                line-height: 1.2;
+            }
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -61,12 +235,12 @@
             <div class="tab-pane fade show active" id="declarations-content" role="tabpanel" aria-labelledby="declarations-tab">
                 <div class="row">
                     <!-- Left panel - Declarations -->
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-5">
                         <div class="card">
                             <div class="card-header bg-primary text-white">
                                 <h5 class="mb-0">Dividend Declarations</h5>
                             </div>
-                            <div class="card-body" style="max-height: 80vh; overflow-y: auto;">
+                            <div class="card-body" style="max-height: 60vh; overflow-y: auto;">
                                 <div id="declaration-panel"
                                      hx-get="/declarations"
                                      hx-trigger="load"
@@ -78,12 +252,12 @@
                     </div>
 
                     <!-- Right panel - Results -->
-                    <div class="col-8">
+                    <div class="col-lg-8 col-md-7">
                         <div class="card">
                             <div class="card-header bg-success text-white">
                                 <h5 class="mb-0">Eligibility Results</h5>
                             </div>
-                            <div class="card-body" style="max-height: 80vh; overflow-y: auto;">
+                            <div class="card-body" style="max-height: 60vh; overflow-y: auto;">
                                 <div id="results-panel">
                                     <div class="text-center text-muted mt-5">
                                         <h4>Select a declaration to process</h4>
